@@ -67,7 +67,7 @@ def add_contestant():
                 c_type = input(
                     "Is the contestant an individual(i) or a team(t)? ")
                 contestant_type = 0
-                if c_type == "i" or c_type == "I":
+                if c_type.lower() == "i":
                     contestant_type = "i"
                     individuals = "SELECT * FROM tbl_contestants WHERE contestant_type = 'i'"
                     mycursor.execute(individuals)
@@ -78,7 +78,7 @@ def add_contestant():
                     if i >= 20:
                         contestant_type = 0
 
-                elif c_type == "t" or c_type == "T":
+                elif c_type.lower() == "t":
                     contestant_type = "t"
 
                     teams = "SELECT * FROM tbl_contestants WHERE contestant_type = 't'"
@@ -187,14 +187,14 @@ Type 5 to cancel
                     elif row_count == 1:
                         n_type = input(
                             "What would you like this contestant's type to be? ")
-                        if n_type == "i" or n_type == "I":
+                        if n_type.lower() == "i":
                             sql = "UPDATE tbl_contestants SET contestant_type ='i' WHERE contestant_id ="+c_id
                             mycursor.execute(sql)
                             print("Contestant type changed to Individual")
                             mydb.commit()
                             mydb.close()
                             x += 1
-                        elif n_type == "t" or n_type == "T":
+                        elif n_type.lower() == "t":
                             sql = "UPDATE tbl_contestants SET contestant_type ='t' WHERE contestant_id ="+c_id
                             mycursor.execute(sql)
                             print("Contestant type changed to Team")
@@ -229,14 +229,14 @@ Type 5 to cancel
                             a_id, a_name, a_type))
                     choice = input(
                         "Are you sure you want to delete '"+a_name+"' [Y/N]: ")
-                    if choice == "y" or choice == "Y":
+                    if choice.lower() == "y":
                         print("Deleting contestant...")
                         delete = "DELETE FROM tbl_contestants WHERE contestant_id =" + c_id
                         mycursor.execute(delete)
                         mydb.commit()
                         mydb.close()
                         x += 1
-                    elif choice == "n" or choice == "N":
+                    elif choice.lower() == "n":
                         print("Operation cancelled.")
                         print("Returning to menu.")
                         x = count
@@ -299,9 +299,9 @@ Type 6 to cancel
                     i_type = input(
                         "Is the event an Individual(i) or Team(t) event? ")
                     e_type = 0
-                    if i_type == "i" or i_type == "I":
+                    if i_type.lower() == "i":
                         e_type = "i"
-                    elif i_type == "t" or i_type == "T":
+                    elif i_type.lower() == "t":
                         e_type = "t"
                     else:
                         print(
@@ -350,7 +350,7 @@ Type 6 to cancel
                             a_id, a_name, a_type))
                     choice = input(
                         "Are you sure you want to delete event: '" + a_name + "' [Y/N]: ")
-                    if choice == "y" or choice == "Y":
+                    if choice.lower() == "y":
                         print("Deleting contestant...")
                         s_id = str(a_id)
                         delete = "DELETE FROM tbl_events WHERE event_id =" + s_id
@@ -358,7 +358,7 @@ Type 6 to cancel
                         mydb.commit()
                         mydb.close()
                         x += 1
-                    elif choice == "n" or choice == "N":
+                    elif choice.lower() == "n":
                         print("Operation cancelled.")
                         print("Returning to menu...")
                         x = count
@@ -393,14 +393,14 @@ Type 6 to cancel
                     elif row_count == 1:
                         n_type = input(
                             "What would you like this event's type to be? ")
-                        if n_type == "i" or n_type == "I":
+                        if n_type.lower() == "i":
                             update = "UPDATE tbl_events SET event_type = 'i' WHERE event_id =" + e_id
                             mycursor.execute(update)
                             print("Event type changed to Individual.")
                             mydb.commit()
                             mydb.close()
                             x += 1
-                        elif n_type == "t" or n_type == "T":
+                        elif n_type.lower() == "t":
                             update = "UPDATE tbl_events SET event_type = 't' WHERE event_id =" + e_id
                             mycursor.execute(update)
                             print("Event type changed to Team.")
@@ -638,13 +638,13 @@ Type 4 to cancel
                             s_id, c_id, e_id, score))
                     option = input(
                         "Are you sure you want to delete this event? [Y/N]: ")
-                    if option == "y" or option == "Y":
+                    if option.lower() == "y":
                         print("Deleting contestant...")
                         delete = "DELETE FROM tbl_event_participation WHERE id =" + s_id
                         mycursor.execute(delete)
                         mydb.commit()
                         mydb.close()
-                    elif option == "n" or option == "N":
+                    elif option.lower() == "n":
                         print("Operation cancelled.")
                         print("Returning to menu...")
                         x = count
@@ -672,7 +672,7 @@ def read_scores():
         try:
             p_or_e = input(
                 "Would you like to search by event(e) or contestant(c)?")
-            if p_or_e == "e" or p_or_e == "E":
+            if p_or_e.lower() == "e":
                 print("Searching by event...")
                 event = input("Enter the event ID you wish to search for: ")
                 mydb = pyodbc.connect(conn_str)
@@ -690,7 +690,7 @@ def read_scores():
                         s_id, c_id, e_id, score))
                 mydb.close()
                 break
-            elif p_or_e == "c" or p_or_e == "C":
+            elif p_or_e.lower() == "c":
                 print("Searching by contestant...")
                 contestant = input(
                     "Enter the contestant ID you wish to search for: ")
@@ -743,7 +743,7 @@ Type 7 to exit the program
                 display_help()
             elif choice == 7:
                 confirm_exit = input("Are you sure you want to exit? [Y/N]: ")
-                if confirm_exit == "y" or confirm_exit == "Y":
+                if confirm_exit.lower() == "y":
                     print("Program will now exit.")
                     sys.exit()
                 else:
