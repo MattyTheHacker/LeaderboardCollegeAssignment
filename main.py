@@ -4,8 +4,9 @@ import pyodbc
 conn_str = (
     r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};'
     r'DBQ=D:\PyCharm\courseprogram_access\tournament.accdb;'
-    )
-#REMEMBER TO CHANGE THE ABOVE DIRECTORY TO THE FOLDER WHERE THE DATABASE IS LOCATED...
+)
+# REMEMBER TO CHANGE THE ABOVE DIRECTORY TO THE FOLDER WHERE THE DATABASE IS LOCATED...
+
 
 def display_help():
     # Function to explain options in the menu
@@ -36,7 +37,7 @@ def test():
     ssl_first_row = mycursor.fetchone()
     print(ssl_first_row)
 
-    #for row in result:
+    # for row in result:
     #    c_id = row[0]
     #    c_name = row[1]
     #    c_type = row[2]
@@ -63,7 +64,8 @@ def add_contestant():
             mycursor = mydb.cursor()
             if x != count:
                 c_name = input("What is the name of the contestant? ")
-                c_type = input("Is the contestant an individual(i) or a team(t)? ")
+                c_type = input(
+                    "Is the contestant an individual(i) or a team(t)? ")
                 contestant_type = 0
                 if c_type == "i" or c_type == "I":
                     contestant_type = "i"
@@ -88,7 +90,8 @@ def add_contestant():
                     if t >= 4:
                         contestant_type = 0
                 else:
-                    print("The value you have entered is not valid. Please enter 'i' or 't'")
+                    print(
+                        "The value you have entered is not valid. Please enter 'i' or 't'")
 
                 if contestant_type != 0:
                     mydb = pyodbc.connect(conn_str)
@@ -101,7 +104,8 @@ def add_contestant():
                     print("Contestant " + c_name + " has been added.")
                     x += 1
                 else:
-                    print("The maximum number of contestants of this type has been reached.")
+                    print(
+                        "The maximum number of contestants of this type has been reached.")
                     mydb.close()
                     break
             else:
@@ -129,7 +133,8 @@ Type 5 to cancel
             x = 0
             while True:
                 if x != count:
-                    c_id = input("What is the ID of the contestant you wish to change? ")
+                    c_id = input(
+                        "What is the ID of the contestant you wish to change? ")
                     mydb = pyodbc.connect(conn_str)
                     mycursor = mydb.cursor()
                     sql = "SELECT * FROM tbl_contestants WHERE contestant_id =" + c_id
@@ -140,10 +145,13 @@ Type 5 to cancel
                         a += 1
                         row_count = a
                     if row_count == 0:
-                        print("Sorry, we couldn't find ID: " + c_id + ", in the database. Please try again.")
+                        print("Sorry, we couldn't find ID: " + c_id +
+                              ", in the database. Please try again.")
                     elif row_count == 1:
-                        n_name = input("What would you like the name to be changed to? ")
-                        sql = "UPDATE tbl_contestants SET contestant_name ='"+n_name+"' WHERE contestant_id ="+c_id
+                        n_name = input(
+                            "What would you like the name to be changed to? ")
+                        sql = "UPDATE tbl_contestants SET contestant_name ='" + \
+                            n_name+"' WHERE contestant_id ="+c_id
                         mycursor.execute(sql)
                         print("Contestant name updated.")
                         mydb.commit()
@@ -162,7 +170,8 @@ Type 5 to cancel
             x = 0
             while True:
                 if x != count:
-                    c_id = input("What is the ID of the contestant you wish to change? ")
+                    c_id = input(
+                        "What is the ID of the contestant you wish to change? ")
                     mydb = pyodbc.connect(conn_str)
                     mycursor = mydb.cursor()
                     sql = "SELECT * FROM tbl_contestants WHERE contestant_id =" + c_id
@@ -173,9 +182,11 @@ Type 5 to cancel
                         c += 1
                         row_count = c
                     if row_count == 0:
-                        print("Sorry, we couldn't find ID: " + c_id + ",in the database. Please try again.")
+                        print("Sorry, we couldn't find ID: " + c_id +
+                              ",in the database. Please try again.")
                     elif row_count == 1:
-                        n_type = input("What would you like this contestant's type to be? ")
+                        n_type = input(
+                            "What would you like this contestant's type to be? ")
                         if n_type == "i" or n_type == "I":
                             sql = "UPDATE tbl_contestants SET contestant_type ='i' WHERE contestant_id ="+c_id
                             mycursor.execute(sql)
@@ -196,12 +207,14 @@ Type 5 to cancel
                     print("Returning to menu.")
                     menu()
         elif option == 3:
-            print("You have chosen to delete a contestant. Please remember this will also delete their scores.")
+            print(
+                "You have chosen to delete a contestant. Please remember this will also delete their scores.")
             count = int(input("How many users would you like to delete? "))
             x = 0
             while True:
                 if x != count:
-                    c_id = input("What is the ID of the contestant you wish to delete: ")
+                    c_id = input(
+                        "What is the ID of the contestant you wish to delete: ")
                     mydb = pyodbc.connect(conn_str)
                     mycursor = mydb.cursor()
                     sql = "SELECT * FROM tbl_contestants WHERE contestant_id =" + c_id
@@ -212,8 +225,10 @@ Type 5 to cancel
                         a_id = row[0]
                         a_name = row[1]
                         a_type = row[2]
-                        print("\nID: {}\nName: {}\nType: {}\n".format(a_id, a_name, a_type))
-                    choice = input("Are you sure you want to delete '"+a_name+"' [Y/N]: ")
+                        print("\nID: {}\nName: {}\nType: {}\n".format(
+                            a_id, a_name, a_type))
+                    choice = input(
+                        "Are you sure you want to delete '"+a_name+"' [Y/N]: ")
                     if choice == "y" or choice == "Y":
                         print("Deleting contestant...")
                         delete = "DELETE FROM tbl_contestants WHERE contestant_id =" + c_id
@@ -248,7 +263,8 @@ Type 5 to cancel
                 c_name = row[1]
                 c_type = row[2]
                 x += 1
-                print("\nContestant ID: {}\nContestant Name: {}\nContestant Type: {}".format(c_id, c_name, c_type))
+                print("\nContestant ID: {}\nContestant Name: {}\nContestant Type: {}".format(
+                    c_id, c_name, c_type))
             rows = str(x)
             print("Retrieved " + rows + " Contestants.")
             edit_contestant()
@@ -280,14 +296,16 @@ Type 6 to cancel
             while True:
                 if x != count:
                     i_name = input("What is the name of the new event? ")
-                    i_type = input("Is the event an Individual(i) or Team(t) event? ")
+                    i_type = input(
+                        "Is the event an Individual(i) or Team(t) event? ")
                     e_type = 0
                     if i_type == "i" or i_type == "I":
                         e_type = "i"
                     elif i_type == "t" or i_type == "T":
                         e_type = "t"
                     else:
-                        print("The type you have entered is not valid. Please choose either 'i' or 't'")
+                        print(
+                            "The type you have entered is not valid. Please choose either 'i' or 't'")
 
                     if e_type != 0:
                         mydb = pyodbc.connect(conn_str)
@@ -297,7 +315,8 @@ Type 6 to cancel
                         mycursor.execute(sql, values)
                         mydb.commit()
                         mydb.close()
-                        print("Event " + i_name + " with type: " + e_type + ", has been added. ")
+                        print("Event " + i_name + " with type: " +
+                              e_type + ", has been added. ")
                         x += 1
                     else:
                         print("Sorry, something went wrong. Please try again.")
@@ -306,13 +325,16 @@ Type 6 to cancel
                     menu()
         elif option == 2:
             print("You have chosen to delete an event.")
-            print("Please remember that this will also delete the scores associated with this event.")
-            print("You will only be able to delete one event at a time for safety purposes.")
+            print(
+                "Please remember that this will also delete the scores associated with this event.")
+            print(
+                "You will only be able to delete one event at a time for safety purposes.")
             x = 0
             count = 1
             while True:
                 if x != count:
-                    e_id = input("Enter the ID of the event you wish to delete: ")
+                    e_id = input(
+                        "Enter the ID of the event you wish to delete: ")
                     mydb = pyodbc.connect(conn_str)
                     mycursor = mydb.cursor()
                     select = "SELECT * FROM tbl_events WHERE event_id =" + e_id
@@ -324,8 +346,10 @@ Type 6 to cancel
                         a_id = row[0]
                         a_name = row[1]
                         a_type = row[2]
-                        print("\nEvent ID: {}\nEvent Name: {}\nEvent Type: {}".format(a_id, a_name, a_type))
-                    choice = input("Are you sure you want to delete event: '" + a_name + "' [Y/N]: ")
+                        print("\nEvent ID: {}\nEvent Name: {}\nEvent Type: {}".format(
+                            a_id, a_name, a_type))
+                    choice = input(
+                        "Are you sure you want to delete event: '" + a_name + "' [Y/N]: ")
                     if choice == "y" or choice == "Y":
                         print("Deleting contestant...")
                         s_id = str(a_id)
@@ -352,7 +376,8 @@ Type 6 to cancel
             x = 0
             while True:
                 if x != count:
-                    e_id = input("What is the ID of the event you wish to change? ")
+                    e_id = input(
+                        "What is the ID of the event you wish to change? ")
                     mydb = pyodbc.connect(conn_str)
                     mycursor = mydb.cursor()
                     sql = "SELECT * FROM tbl_events WHERE event_id =" + e_id
@@ -363,9 +388,11 @@ Type 6 to cancel
                         b += 1
                         row_count = b
                     if row_count == 0:
-                        print("Sorry, we couldn't find event ID: " + e_id + ", in the database. Please try again.")
+                        print("Sorry, we couldn't find event ID: " +
+                              e_id + ", in the database. Please try again.")
                     elif row_count == 1:
-                        n_type = input("What would you like this event's type to be? ")
+                        n_type = input(
+                            "What would you like this event's type to be? ")
                         if n_type == "i" or n_type == "I":
                             update = "UPDATE tbl_events SET event_type = 'i' WHERE event_id =" + e_id
                             mycursor.execute(update)
@@ -390,7 +417,8 @@ Type 6 to cancel
             x = 0
             while True:
                 if x != count:
-                    e_id = input("What is the id of the event you wish to change?")
+                    e_id = input(
+                        "What is the id of the event you wish to change?")
                     mydb = pyodbc.connect(conn_str)
                     mycursor = mydb.cursor()
                     select = "SELECT * FROM tbl_events WHERE event_id =" + e_id
@@ -401,10 +429,13 @@ Type 6 to cancel
                         c += 1
                         row_count = c
                     if row_count == 0:
-                        print("Sorry, we couldn't find event ID: " + e_id + ", in the database. Please try again.")
+                        print("Sorry, we couldn't find event ID: " +
+                              e_id + ", in the database. Please try again.")
                     elif row_count == 1:
-                        n_name = input("What would you like the name to be changed to? ")
-                        update = "UPDATE tbl_events SET event_name ='" + n_name + "' WHERE event_id =" + e_id
+                        n_name = input(
+                            "What would you like the name to be changed to? ")
+                        update = "UPDATE tbl_events SET event_name ='" + \
+                            n_name + "' WHERE event_id =" + e_id
                         mycursor.execute(update)
                         print("Event name updated.")
                         mydb.commit()
@@ -429,7 +460,8 @@ Type 6 to cancel
                 e_name = row[1]
                 e_type = row[2]
                 x += 1
-                print("\nEvent ID: {}\nEvent Name: {}\nEvent Type: {}".format(e_id, e_name, e_type))
+                print("\nEvent ID: {}\nEvent Name: {}\nEvent Type: {}".format(
+                    e_id, e_name, e_type))
             rows = str(x)
             print("Retrieved " + rows + " Events.")
             edit_event()
@@ -460,8 +492,10 @@ Type 4 to cancel
             x = 0
             while True:
                 if x != count:
-                    c_id = str(input("What is the ID of the contestant you wish to add a score for? "))
-                    e_id = str(input("What is the ID of the event which the score relates to?"))
+                    c_id = str(
+                        input("What is the ID of the contestant you wish to add a score for? "))
+                    e_id = str(
+                        input("What is the ID of the event which the score relates to?"))
                     c_type = 0
                     e_type = 0
                     mydb = pyodbc.connect(conn_str)
@@ -502,7 +536,8 @@ Type 4 to cancel
                                 row_count = g
                             if row_count == 0:
                                 print("Event and contestant found.")
-                                score = str(input("Please enter the score the contestant achieved: "))
+                                score = str(
+                                    input("Please enter the score the contestant achieved: "))
                                 insert = "INSERT INTO tbl_event_participation (contestant_id, event_id, score) VALUES (?, ?, ?)"
                                 values = (c_id, e_id, score)
                                 mycursor.execute(insert, values)
@@ -511,14 +546,17 @@ Type 4 to cancel
                                 mydb.close()
                                 x += 1
                             else:
-                                print("This contestant's scores have already been entered.")
+                                print(
+                                    "This contestant's scores have already been entered.")
                                 mydb.rollback()
                                 mydb.close()
                         else:
-                            print("This contestant can not compete in this event. Please try again.")
+                            print(
+                                "This contestant can not compete in this event. Please try again.")
                             mydb.rollback()
                     elif contestant_count == 0 and event_count == 0:
-                        print("Neither the event nor contestant that you entered could be found. Please try again.")
+                        print(
+                            "Neither the event nor contestant that you entered could be found. Please try again.")
                     elif contestant_count == 0:
                         print("Contestant not found. Please try again.")
                     elif event_count == 0:
@@ -532,7 +570,8 @@ Type 4 to cancel
             x = 0
             while True:
                 if x != count:
-                    s_id = input("What is the ID of the score you wish to change? ")
+                    s_id = input(
+                        "What is the ID of the score you wish to change? ")
                     mydb = pyodbc.connect(conn_str)
                     mycursor = mydb.cursor()
                     select = "SELECT * FROM tbl_event_participation WHERE id =" + s_id
@@ -543,7 +582,8 @@ Type 4 to cancel
                         h += 1
                         row_count = h
                     if row_count == 0:
-                        print("Sorry, we couldn't find the score ID: " + s_id + ", in the database. Please try again.")
+                        print("Sorry, we couldn't find the score ID: " +
+                              s_id + ", in the database. Please try again.")
                         mydb.close()
                     elif row_count == 1:
                         print("Here's what we found:")
@@ -552,9 +592,12 @@ Type 4 to cancel
                             c_id = row[1]
                             e_id = row[2]
                             score = row[3]
-                            print("\nScore ID: {}\nContestant ID: {}\nEvent ID: {}\nScore: {}".format(s_id, c_id, e_id, score))
-                        n_score = input("What would you like the score to be changed to?")
-                        update = "UPDATE tbl_event_participation SET score ='" + n_score + "' WHERE id ='" + s_id
+                            print("\nScore ID: {}\nContestant ID: {}\nEvent ID: {}\nScore: {}".format(
+                                s_id, c_id, e_id, score))
+                        n_score = input(
+                            "What would you like the score to be changed to?")
+                        update = "UPDATE tbl_event_participation SET score ='" + \
+                            n_score + "' WHERE id ='" + s_id
                         mycursor.execute(update)
                         print("Score updated.")
                         mydb.commit()
@@ -569,12 +612,14 @@ Type 4 to cancel
         elif choice == 3:
             print("You have chosen to delete a score.")
             print("Please remember this action can not be undone.")
-            print("For safety purposes you will only be able to delete one score at a time.")
+            print(
+                "For safety purposes you will only be able to delete one score at a time.")
             x = 0
             count = 1
             while True:
                 if x != count:
-                    s_id = input("Enter the ID of the score you wish to delete: ")
+                    s_id = input(
+                        "Enter the ID of the score you wish to delete: ")
                     mydb = pyodbc.connect(conn_str)
                     mycursor = mydb.cursor()
                     select = "SELECT * FROM tbl_event_participation WHERE id =" + s_id
@@ -589,8 +634,10 @@ Type 4 to cancel
                         c_id = row[1]
                         e_id = row[2]
                         score = row[3]
-                        print("\nScore ID: {}\nContestant ID: {}\nEvent ID: {}\nScore: {}".format(s_id, c_id, e_id, score))
-                    option = input("Are you sure you want to delete this event? [Y/N]: ")
+                        print("\nScore ID: {}\nContestant ID: {}\nEvent ID: {}\nScore: {}".format(
+                            s_id, c_id, e_id, score))
+                    option = input(
+                        "Are you sure you want to delete this event? [Y/N]: ")
                     if option == "y" or option == "Y":
                         print("Deleting contestant...")
                         delete = "DELETE FROM tbl_event_participation WHERE id =" + s_id
@@ -623,7 +670,8 @@ Type 4 to cancel
 def read_scores():
     while True:
         try:
-            p_or_e = input("Would you like to search by event(e) or contestant(c)?")
+            p_or_e = input(
+                "Would you like to search by event(e) or contestant(c)?")
             if p_or_e == "e" or p_or_e == "E":
                 print("Searching by event...")
                 event = input("Enter the event ID you wish to search for: ")
@@ -638,12 +686,14 @@ def read_scores():
                     c_id = row[1]
                     e_id = row[2]
                     score = row[3]
-                    print("\nScore ID: {}\nContestant ID: {}\nEvent ID: {}\nScore: {}".format(s_id, c_id, e_id, score))
+                    print("\nScore ID: {}\nContestant ID: {}\nEvent ID: {}\nScore: {}".format(
+                        s_id, c_id, e_id, score))
                 mydb.close()
                 break
             elif p_or_e == "c" or p_or_e == "C":
                 print("Searching by contestant...")
-                contestant = input("Enter the contestant ID you wish to search for: ")
+                contestant = input(
+                    "Enter the contestant ID you wish to search for: ")
                 mydb = pyodbc.connect(conn_str)
                 mycursor = mydb.cursor()
                 search = "SELECT * FROM tbl_event_participation WHERE contestant_id =" + contestant
@@ -655,7 +705,8 @@ def read_scores():
                     c_id = row[1]
                     e_id = row[2]
                     score = row[3]
-                    print("\nScore ID: {}\nContestant ID: {}\nEvent ID: {}\nScore: {}".format(s_id, c_id, e_id, score))
+                    print("\nScore ID: {}\nContestant ID: {}\nEvent ID: {}\nScore: {}".format(
+                        s_id, c_id, e_id, score))
                 mydb.close()
                 break
         except ValueError:
@@ -708,4 +759,3 @@ def main():
 
 
 main()
-
