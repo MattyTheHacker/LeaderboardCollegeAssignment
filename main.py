@@ -23,35 +23,6 @@ Choosing option 7 will prompt you to confirm you wish to exit the program.
     ''')
 
 
-def test():
-
-    sql = "SELECT * FROM tbl_contestants"
-    ssl = "SELECT * FROM tbl_contestants WHERE contestant_type = 'i'"
-
-    mydb = pyodbc.connect(conn_str)
-    mycursor = mydb.cursor()
-    mycursor.execute(sql)
-    sql_first_row = mycursor.fetchone()
-    print(sql_first_row)
-    mycursor.execute(ssl)
-    ssl_first_row = mycursor.fetchone()
-    print(ssl_first_row)
-
-    # for row in result:
-    #    c_id = row[0]
-    #    c_name = row[1]
-    #    c_type = row[2]
-    #    print("ID: {}\nName: {}\nType: {}\n".format(c_id, c_name, c_type))
-    mydb.close()
-
-    # mydb = mysql.connector.connect(host=host, user=user, passwd=password, database=db)
-    # mycursor = mydb.cursor()
-    # mycursor.execute(sql)
-    # result = mycursor.fetchall()
-    # print(result)
-    # mydb.close()
-
-
 def add_contestant():
     # Function that allows user to add a new contestant
     print("A contestant can be either an individual or a team.")
