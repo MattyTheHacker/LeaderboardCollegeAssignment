@@ -1,1 +1,1 @@
-"# LeaderboardCollegeAssignment" 
+# LeaderboardCollegeAssignment
